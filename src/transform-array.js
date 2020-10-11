@@ -1,41 +1,23 @@
 const CustomError = require("../extensions/custom-error");
 
-module.exports = function transform(arraa) {
-  throw new CustomError('Not implemented');
-/*
-  if(arraa == []) return [];
-  let arr = [];
-  for(let i = 0; i < arraa.length; i++) arr.push(arraa[i]);
+module.exports = function transform(arr) {
+  if(!Array.isArray(arr)){
+    throw new Error();
+  };
+  if(arr == []) return [];
+  let res = [];
   for(let i = 0; i < arr.length; i++) {
     if(arr[i] == '--discard-prev') {
-      if(i == 0) {
-        arr.splice(i, 1);
-        i--;
-      } else {
-        arr.splice(i - 1, 2);
-        i -= 2;
-      }
+      if(i > 0 && arr[i - 2] != '--discard-next') res.pop();
     } else if(arr[i] == '--double-prev') {
-      if(i == 0) {
-        arr.splice(i, 1);
-        i--;
-      } else {
-        arr[i] = arr[i - 1];
-      }
-    } else if(arr[i] == '--double-next') {
-      if(i == arr.length - 1) {
-        arr.splice(i, 1);
-      } else {
-        arr[i] = arr[i + 1];
-      }
+      if(i > 0 && arr[i - 2] != '--discard-next') res.push(res[res.length - 1]);
     } else if(arr[i] == '--discard-next') {
-      if(i == arr.length - 1) {
-        arr.splice(i, 1);
-      } else {
-        arr.splice(i, 2);
-        i--;
-      }
+      i++;
+    } else if(arr[i] == '--double-next') {
+      if(i + 1 < arr.length) res.push(arr[i + 1]);
+    } else {
+      res.push(arr[i]);
     }
   }
-  return arr;*/
+  return res;
 };
