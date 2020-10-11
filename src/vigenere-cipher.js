@@ -5,12 +5,12 @@ class VigenereCipheringMachine {
     this.directMode = dir_mode;
   }
   encrypt(message, key) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    if(typeof message != "string" || typeof key != "string") throw Error;
+    message = message.toUpperCase;
   }
   decrypt(encryptedMessage, key) {
-    throw new CustomError('Not implemented');
-    // remove line with error and write your code here
+    if(typeof encryptedMessage != "string" || typeof key != "string") throw Error;
+    
   } 
 }
 
